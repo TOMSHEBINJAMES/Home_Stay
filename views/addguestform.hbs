@@ -1,0 +1,179 @@
+<style>
+    body {
+        color: #000;
+        overflow-x: hidden;
+        height: 100%;
+        background-image: url("https://i.imgur.com/GMmCQHC.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%
+    }
+
+    .card {
+        padding: 30px 40px;
+        margin-top: 60px;
+        margin-bottom: 60px;
+        border: none !important;
+        box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2)
+    }
+
+    .blue-text {
+        color: #00BCD4
+    }
+
+    .form-control-label {
+        margin-bottom: 0
+    }
+
+    input,
+    textarea,
+    button {
+        padding: 8px 15px;
+        border-radius: 5px !important;
+        margin: 5px 0px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        font-size: 18px !important;
+        font-weight: 300
+    }
+
+    input:focus,
+    textarea:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: 1px solid #00BCD4;
+        outline-width: 0;
+        font-weight: 400
+    }
+
+    .btn-block {
+        text-transform: uppercase;
+        font-size: 15px !important;
+        font-weight: 400;
+        height: 43px;
+        cursor: pointer
+    }
+
+    .btn-block:hover {
+        color: #fff !important
+    }
+
+    button:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        outline-width: 0
+    }
+</style>
+<div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            {{!-- <h3>Request a Demo</h3> --}}
+            {{!-- <p class="blue-text">Just answer a few questions<br> so that we can personalize the right experience
+                for you.</p> --}}
+            <div class="card">
+                <h5 class="text-center mb-4">Guest Details</h5>
+                <form action="/staff/addguestdata/{{staff_id}}" method="post" class="form-card"
+                    enctype="application/x-www-form-urlencoded">
+
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Name<span class="text-danger"> *</span></label>
+                            <input type="text" id="name" name="Name" placeholder="Enter Guest Name" onblur="validate(1)"
+                                required>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Contact Number<span
+                                    class="text-danger">*</span></label>
+                            <input type="Text" id="Contact_Number" name="Contact_Number"
+                                placeholder="Enter Contact Number" onblur="validate(3)" required>
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex"> <label
+                                class="form-control-label px-3">Age<span class="text-danger"> *</span></label> <input
+                                type="Number" id="Age" name="Age" placeholder="Enter Age" onblur="validate(3)" required>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex"> <label
+                                class="form-control-label px-3">Nationality<span class="text-danger"> *</span></label>
+                            <input type="text" id="Nationality" name="Nationality" placeholder="Enter Nationality"
+                                onblur="validate(4)" required>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex"><label class="form-control-label px-3">ID
+                                Proof<span class="text-danger"> *</span><br>
+                                <select name="ID_Proof" id="ID_Proof" required>
+                                    <option value="">Select Id Proof</option>
+                                    <option value="Aadhar Card">Aadhar Card</option>
+                                    <option value="Passport">Passport</option>
+                                </select>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">ID
+                                Number<span class="text-danger"> *</span></label> <input type="text" id="ID_Number"
+                                name="ID_Number" placeholder="Enter ID Number" onblur="validate(5)" required> </div>
+                    </div>
+
+
+
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex"><label
+                                class="form-control-label px-3">Payment Method<span class="text-danger"> *</span><br>
+                                <select name="Payment_Method" required>
+                                    <option value="">Select Payment Method</option>
+                                    <option value="Debit Card">Debit Card</option>
+                                    <option value="Credit Card">Credit Card</option>
+                                    <option value="UPI Card">UPI</option>
+                                    <option value="Cash">Cash</option>
+                                </select>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex"> <label
+                                class="form-control-label px-3">Payment_ID<span class="text-danger"> *</span></label>
+                            <input type="Text" id="Payment_ID" name="Payment_ID" placeholder="Enter Payment ID"
+                                onblur="validate(3)" required>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex"><label class="form-control-label px-3">Room
+                                Number<span class="text-danger"> *</span><br>
+                                <select name="Room_No" id="Payment_Method" required>
+                                    <option value="">available rooms</option>
+                                    {{#each available_rooms}}
+                                    <option value="{{this.RoomNumber}}">{{this.RoomNumber}}</option>
+                                    {{/each}}
+                                </select>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Guest Number<span class="text-danger">
+                                    *</span></label>
+                            <input type="text" id="Guest_Number" name="Guest_Number" placeholder="Enter Guest Number"
+                                onblur="validate(5)" required>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Check-in Date<span class="text-danger">
+                                    *</span></label>
+                            <input type="date" id="Check_In_Date" name="Check_In_Date" placeholder="Check-In Date"
+                                onblur="validate(1)" required>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Charge<span class="text-danger">*</span></label>
+                            <input type="Text" id="Amount" name="Amount" placeholder="Amount" onblur="validate(3)"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-end">
+                        <div class="form-group col-sm-6"> <button type="submit"
+                                class="btn-block btn-primary">Submit</button> </div>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

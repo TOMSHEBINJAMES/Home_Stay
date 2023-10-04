@@ -1,0 +1,165 @@
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+  }
+
+  form.example button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #76b852;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+  }
+
+  form.example button:hover {
+    background: #0b7dda;
+  }
+
+  form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  .btn1 {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* Darker background on mouse-over */
+  .btn1:hover {
+    background-color: RoyalBlue;
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #76b852 ;">
+  <a class="navbar-brand" href="#">HomeStay</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/adminhome">Staffs<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/guestdata">Guest<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/addroom">Rooms<span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+        logout
+      </button>
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              Are you sure to logout?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn text-white" data-dismiss="modal" style="background: #df6767;">Close</button>
+              <a href="/logout" type="button" class="btn text-white" style="background: #76b852;">Confirm</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</nav>
+<section>
+  {{#if guestdetails}}
+  <form class="example mt-4" action="/search" style="margin:auto;max-width:300px" method="post"
+    enctype="application/x-www-form-urlencoded">
+    <input type="text" placeholder="Search by room number. . ." name="room_no">
+    <button type="submit"><i class="fa fa-search"></i></button>
+  </form>
+  {{/if}}
+  <div class="container-fluid mt-4">
+    {{#if guestdetails}}
+    <h3 class="text-center">Guest Report</h3>
+    <div>
+      <table class="table border border-success table-responsive table-sm" style='table-layout:fixed' id="guest-table">
+        <thead>
+          <tr>
+            <th scope="col">SL.No</th>
+            <th scope="col">Name</th>
+            <th scope="col">Contact Number</th>
+            <th scope="col">Age</th>
+            <th scope="col">Nationality</th>
+            <th scope="col">ID Proof</th>
+            <th scope="col">ID Number</th>
+            <th scope="col">Payment Method</th>
+            <th scope="col">Payment ID</th>
+            <th scope="col">Room Number</th>
+            <th scope="col">Guest Number</th>
+            <th scope="col">Check-In Date</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        {{#each guestdetails}}
+        <tbody>
+          <tr>
+            {{#if this.Name}}
+            <td>{{inc @index}}</td>
+            <td>{{this.Name}}</td>
+            <td>{{this.Contact_Number}}</td>
+            <td>{{this.Age}}</td>
+            <td>{{this.Nationality}}</td>
+            <td>{{this.ID_Proof}}</td>
+            <td>{{this.ID_Number}}</td>
+            <td>{{this.Payment_Method }}</td>
+            <td>{{this.Payment_ID}}</td>
+            <td>{{this.Room_No}}</td>
+            <td>{{this.Guest_Number}}</td>
+            <td>{{this.Check_In_Date}}</td>
+            <td>{{this.Amount}}</td>
+            <td><a href="/delete/guest/{{this._id}}" class="btn btn-danger">Delete</a></td>
+            {{/if}}
+          </tr>
+        </tbody>
+        {{/each}}
+      </table>
+    </div>
+  </div>
+  {{else}}
+  <h5 class="text-center mt-4">No data available</h5>
+  <p class="text-center">It seems like no guest registered or the data is not uploaded yet. <br> please check with your
+    staff.</p>
+  <div class="text-center"><i class="fa fa-user-secret"></i></div>
+  {{/if}}
+  <div class="container-fluid">
+    <form class="example float-right" action="/search/date" style="margin:auto;max-width:300px" method="post"
+      enctype="application/x-www-form-urlencoded">
+      {{#if guestdetails}}
+      <input type="text" placeholder="Search by date" name="date">
+      <button type="submit"><i class="fa fa-calendar"></i></button>
+      {{/if}}
+      {{#if date}}
+      <a href="/download/report/{{date}}" class="btn btn-primary mt-1 float-right"
+        style="width: max-content;background:#76b852">download file <i class="fa fa-file"></i></a>
+      {{/if}}
+  </div>
+</section>

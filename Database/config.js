@@ -1,0 +1,1 @@
+export const base_url="mongodb+srv://tom:tomshebin7320@cluster0.7phwvip.mongodb.net/?retryWrites=true&w=majority"
